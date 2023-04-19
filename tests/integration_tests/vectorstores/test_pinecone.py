@@ -94,4 +94,4 @@ def test_pinecone_with_namespaces() -> None:
     output = docsearch.similarity_search("foo", k=6)
     # check that we don't get results from the other namespace
     page_contents = [o.page_content for o in output]
-    assert set(page_contents) == set(["foo", "bar", "baz"])
+    assert set(page_contents) == {"foo", "bar", "baz"}

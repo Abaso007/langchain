@@ -52,7 +52,7 @@ class ReActDocstoreAgent(Agent, BaseModel):
         re_matches = re.search(r"(.*?)\[(.*?)\]", action_str)
         if re_matches is None:
             raise ValueError(f"Could not parse action directive: {action_str}")
-        return re_matches.group(1), re_matches.group(2)
+        return re_matches[1], re_matches[2]
 
     @property
     def finish_tool_name(self) -> str:
@@ -104,7 +104,7 @@ class DocstoreExplorer:
         else:
             self.lookup_index += 1
         lookups = [p for p in self._paragraphs if self.lookup_str in p.lower()]
-        if len(lookups) == 0:
+        if not lookups:
             return "No Results"
         elif self.lookup_index >= len(lookups):
             return "No More Results"
