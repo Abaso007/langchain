@@ -55,10 +55,7 @@ class BaseTool(BaseModel):
         **kwargs: Any
     ) -> str:
         """Run the tool."""
-        if not self.verbose and verbose is not None:
-            verbose_ = verbose
-        else:
-            verbose_ = self.verbose
+        verbose_ = self.verbose if self.verbose or verbose is None else verbose
         self.callback_manager.on_tool_start(
             {"name": self.name, "description": self.description},
             tool_input,
@@ -85,10 +82,7 @@ class BaseTool(BaseModel):
         **kwargs: Any
     ) -> str:
         """Run the tool asynchronously."""
-        if not self.verbose and verbose is not None:
-            verbose_ = verbose
-        else:
-            verbose_ = self.verbose
+        verbose_ = self.verbose if self.verbose or verbose is None else verbose
         if self.callback_manager.is_async:
             await self.callback_manager.on_tool_start(
                 {"name": self.name, "description": self.description},
